@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: user-consumer
+  cloud:
+    config:
+      uri: http://localhost:8888/
+      profile: default
+      label: master
+
+info:
+  service.name: ${spring.application.name}
+  service.ower: SaaS/dinstone@163.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

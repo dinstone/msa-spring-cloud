@@ -1,0 +1,32 @@
+spring:
+  application: 
+    name: apm-admin
+
+info:
+  service.name: ${spring.application.name}
+  service.ower: PaaS/dinstone@163.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+server:
+  port: 9999
+
+management: 
+  port: 9998
+  security: 
+    enabled: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:123456@localhost:8761/eureka
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+
+security:
+  basic:
+    enabled: false
+  user: 
+    name: apm
+    password: 123456

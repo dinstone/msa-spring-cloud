@@ -1,0 +1,25 @@
+spring:
+  application: 
+    name: config-server
+
+info:
+  service.name: ${spring.application.name}
+  service.ower: IaaS/dinstone@163.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+server:
+  port: 8888
+
+management: 
+  port: 8887
+  security: 
+    enabled: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:123456@localhost:8761/eureka
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
