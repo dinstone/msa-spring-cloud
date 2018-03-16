@@ -6,15 +6,15 @@
 		<version>1.0.0</version>
 	</parent>
 	<groupId>com.dinstone.msa</groupId>
-	<artifactId>msa-config-server</artifactId>
+	<artifactId>msa-hystrix-turbine</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-turbine</artifactId>
 		</dependency>
 	</dependencies>
 </project>

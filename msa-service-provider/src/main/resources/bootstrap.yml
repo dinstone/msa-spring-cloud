@@ -3,6 +3,7 @@ spring:
     name: user-provider
   cloud:
     config:
+      fail-fast: true
       uri: http://localhost:8888/
       profile: default
       label: master

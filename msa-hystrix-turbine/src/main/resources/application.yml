@@ -1,0 +1,37 @@
+spring:
+  application: 
+    name: hystrix-turbine
+
+info:
+  service.name: ${spring.application.name}
+  service.ower: PaaS/dinstone@163.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+server:
+  port: 8787
+
+management: 
+  port: 8786
+  security: 
+    enabled: false
+
+security:
+  basic:
+    enabled: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:123456@localhost:8761/eureka
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+
+turbine:
+  app-config: user-consumer
+  aggregator:
+    cluster-config: USER-CONSUMER
+  combine-host-port: true
+
+    
