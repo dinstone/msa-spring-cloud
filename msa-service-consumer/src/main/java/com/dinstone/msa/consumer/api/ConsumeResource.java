@@ -2,6 +2,8 @@ package com.dinstone.msa.consumer.api;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,8 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 @RequestMapping("/consume")
 public class ConsumeResource {
 
+	private static final Logger log = LoggerFactory.getLogger(ConsumeResource.class);
+
 	@Autowired
 	private UserClientService userClientService;
 
@@ -27,16 +31,19 @@ public class ConsumeResource {
 
 	@GetMapping("/get/{uid}")
 	public User get(@PathVariable("uid") long uid) {
+		log.debug("get access");
 		return userClientService.get(uid);
 	}
 
 	@GetMapping("/list")
 	public List<User> list() {
+		log.info("list access");
 		return userClientService.list();
 	}
 
 	@GetMapping("/dc")
 	public String dc() {
+		log.debug("dc access");
 		return consumerService.consumer();
 	}
 

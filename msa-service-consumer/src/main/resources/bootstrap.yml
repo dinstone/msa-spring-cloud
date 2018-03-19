@@ -1,15 +1,44 @@
 spring:
   application:
     name: user-consumer
+
+info:
+  service:
+    name: ${spring.application.name}
+    ower: SaaS/dinstone@163.com
+  build:
+    group: "@project.groupId@"
+    artifact: "@project.artifactId@"
+    version: "@project.version@"
+    description: "@project.description@"
+
+---
+spring:
+  profiles: dev,default
   cloud:
     config:
       fail-fast: true
       uri: http://localhost:8888/
       profile: default
       label: master
-
-info:
-  service.name: ${spring.application.name}
-  service.ower: SaaS/dinstone@163.com
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
+      
+---
+spring:
+  profiles: online
+  cloud:
+    config:
+      fail-fast: true
+      uri: http://localhost:8888/
+      profile: default
+      label: online
+      
+---
+spring:
+  profiles: test
+  cloud:
+    config:
+      fail-fast: true
+      uri: http://localhost:8888/
+      profile: default
+      label: test
+  

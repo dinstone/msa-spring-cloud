@@ -3,10 +3,14 @@ spring:
     name: eureka-server
     
 info:
-  service.name: ${spring.application.name}
-  service.ower: IaaS/dinstone@163.com
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
+  service:
+    name: ${spring.application.name}
+    ower: SaaS/dinstone@163.com
+  build:
+    group: "@project.groupId@"
+    artifact: "@project.artifactId@"
+    version: "@project.version@"
+    description: "@project.description@"
 
 server:
   port: 8761

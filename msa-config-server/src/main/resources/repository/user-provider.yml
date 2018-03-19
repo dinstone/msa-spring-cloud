@@ -2,12 +2,6 @@ spring:
   application:
     name: user-provider
 
-info:
-  service.name: ${spring.application.name}
-  service.ower: SaaS/dinstone@163.com
-  build.artifactId: $project.artifactId$
-  build.version: $project.version$
-
 server:
   port: 7000
  

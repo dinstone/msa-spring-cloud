@@ -7,6 +7,7 @@
 	</parent>
 	<groupId>com.dinstone.msa</groupId>
 	<artifactId>msa-service-consumer</artifactId>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.dinstone.msa</groupId>
@@ -30,4 +31,5 @@
 			<artifactId>spring-cloud-starter-hystrix</artifactId>
 		</dependency>
 	</dependencies>
+
 </project>
