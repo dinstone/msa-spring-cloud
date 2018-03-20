@@ -1,6 +1,6 @@
 spring:
   application: 
-    name: gatway-zuul
+    name: zipkin-server
 
 info:
   service:
@@ -13,17 +13,14 @@ info:
     description: "@project.description@"
   
 server:
-  port: 9000
+  port: 9411
 
 security:
   basic:
     enabled: false
-  user: 
-    name: zuul
-    password: 123456
 
 management: 
-  port: 9001
+  port: 9410
   security: 
     enabled: false
   
@@ -34,20 +31,3 @@ eureka:
   instance:
     preferIpAddress: true
     instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
-
-zuul:
-  ignored-services: "*"
-  routes: 
-    user-provider: /up/**
-    user-consumer: /uc/**
-
----
-spring:
-  profiles: dev,default
-  sleuth:
-    sampler:
-      percentage: 1.0
-  zipkin:
-    base-url: http://localhost:9411
-  
-    

@@ -5,3 +5,10 @@ eureka:
   instance:
     preferIpAddress: true
     instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+
+spring:
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    base-url: http://localhost:9411

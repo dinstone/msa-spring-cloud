@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<name>msa-spring-cloud</name>
-	<description>Demo project for Spring Boot</description>
+	<description>microservice architecture based on spring cloud framework</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -89,5 +89,6 @@
 		<module>msa-config-server</module>
 		<module>msa-hystrix-dashboard</module>
 		<module>msa-hystrix-turbine</module>
+		<module>msa-zipkin-server</module>
 	</modules>
 </project>
