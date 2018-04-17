@@ -31,7 +31,7 @@ public class ConsumeResource {
 
 	@GetMapping("/get/{uid}")
 	public User get(@PathVariable("uid") long uid) {
-		log.debug("get access");
+		log.info("get access");
 		return userClientService.get(uid);
 	}
 
@@ -43,7 +43,7 @@ public class ConsumeResource {
 
 	@GetMapping("/dc")
 	public String dc() {
-		log.debug("dc access");
+		log.info("dc access");
 		return consumerService.consumer();
 	}
 

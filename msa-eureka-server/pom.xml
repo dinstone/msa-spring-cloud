@@ -6,7 +6,6 @@
 		<artifactId>msa-spring-cloud</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.dinstone.msa</groupId>
 	<artifactId>msa-eureka-server</artifactId>
 	<dependencies>
 		<dependency>
@@ -16,6 +15,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
