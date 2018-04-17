@@ -22,7 +22,7 @@ spring:
       fail-fast: true
       uri: http://localhost:8888/
       profile: default
-      label: master
+      label: dev
       
 ---
 spring:

@@ -13,7 +13,7 @@ info:
     artifact: "@project.artifactId@"
     version: "@project.version@"
     description: "@project.description@"
-    
+
 ---
 spring:
   profiles: dev,default
@@ -22,8 +22,11 @@ spring:
       fail-fast: true
       uri: http://localhost:8888/
       profile: default
-      label: master
-      
+      label: dev
+#      
+#  sleuth:
+#    sampler:
+#      percentage: 1.0      
 ---
 spring:
   profiles: online

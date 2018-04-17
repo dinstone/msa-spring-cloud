@@ -5,7 +5,6 @@
 		<artifactId>msa-spring-cloud</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.dinstone.msa</groupId>
 	<artifactId>msa-service-consumer</artifactId>
 
 	<dependencies>
@@ -13,14 +12,6 @@
 			<groupId>com.dinstone.msa</groupId>
 			<artifactId>msa-service-model</artifactId>
 			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

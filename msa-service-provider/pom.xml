@@ -5,7 +5,6 @@
 		<artifactId>msa-spring-cloud</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<groupId>com.dinstone.msa</groupId>
 	<artifactId>msa-service-provider</artifactId>
 	<dependencies>
 		<dependency>
@@ -15,19 +14,22 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
+			<artifactId>spring-cloud-starter-feign</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-hystrix</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
+		<!--<dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-sleuth-stream</artifactId> </dependency> <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-stream-kafka</artifactId> </dependency> -->
+
+		<!-- Log4j 1.x API Bridge -->
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
 		</dependency>
 	</dependencies>
 </project>
