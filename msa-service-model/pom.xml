@@ -5,6 +5,5 @@
     <artifactId>msa-spring-cloud</artifactId>
     <version>1.0.0</version>
   </parent>
-  <groupId>com.dinstone.msa</groupId>
   <artifactId>msa-service-model</artifactId>
 </project>
