@@ -26,7 +26,8 @@ spring:
 #      
 #  sleuth:
 #    sampler:
-#      percentage: 1.0      
+#      percentage: 1.0
+
 ---
 spring:
   profiles: online

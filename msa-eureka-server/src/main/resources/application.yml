@@ -33,6 +33,8 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://eureka:123456@localhost:8761/eureka
-  instance:
-    preferIpAddress: true
-    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+  server:
+    response-cache-auto-expiration-in-seconds: 180 
+    response-cache-update-interval-ms: 3000
+    eviction-interval-timer-in-ms: 3000
+    

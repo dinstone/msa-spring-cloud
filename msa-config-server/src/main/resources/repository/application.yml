@@ -1,18 +1,24 @@
 eureka:
   client:
+    registry-fetch-interval-seconds: 5
     service-url:
       defaultZone: http://eureka:123456@localhost:8761/eureka
   instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
     preferIpAddress: true
     instance-id: ${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
 
 spring:
   sleuth:
     sampler:
-      percentage: 1.0
+      percentage: 0.1
   zipkin:
-    base-url: http://localhost:9411
-    
+    locator:
+      discovery:
+        enabled: true
+    base-url: http://zipkin-server
+
 server:
   tomcat:
     accept-count: 20
