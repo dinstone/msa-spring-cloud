@@ -22,6 +22,7 @@ public class UserResource {
 	@Autowired
 	private UserService userService;
 
+
 	@GetMapping("/get/{uid}")
 	public User get(@PathVariable("uid") int uid) {
 		LOG.info("get user with {}", uid);
