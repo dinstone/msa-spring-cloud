@@ -9,10 +9,13 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import com.dinstone.measure.starter.EnableMeasure;
+
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableFeignClients
+@EnableMeasure
 public class ServiceConsumerApplication {
 
 	public static void main(String[] args) {
@@ -24,4 +27,5 @@ public class ServiceConsumerApplication {
 	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+
 }

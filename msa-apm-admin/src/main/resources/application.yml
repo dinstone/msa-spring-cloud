@@ -5,7 +5,9 @@ spring:
 info:
   service:
     name: ${spring.application.name}
-    ower: SaaS/dinstone@163.com
+  owner:
+    name: PaaS/dinstone
+    email: dinstone@163.com
   build:
     group: "@project.groupId@"
     artifact: "@project.artifactId@"
@@ -26,7 +28,7 @@ eureka:
       defaultZone: http://eureka:123456@localhost:8761/eureka
   instance:
     preferIpAddress: true
-    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
 
 security:
   basic:

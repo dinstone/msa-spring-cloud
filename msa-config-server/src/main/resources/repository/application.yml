@@ -23,8 +23,8 @@ server:
   tomcat:
     accept-count: 20
     max-connections: 80
-    min-spare-threads: 5
-    max-threads: 20
+    min-spare-threads: 1
+    max-threads: 4
     
     basedir: .
     accesslog:
