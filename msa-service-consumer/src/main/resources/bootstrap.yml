@@ -15,8 +15,7 @@ info:
     description: "@project.description@"
 
 #spring.cloud.netflix.metrics.enabled: false
-measure:
-  aspectj-expression: "execution(public * com.dinstone.msa.consumer.api..*.*(..))"
+
 ---
 spring:
   profiles: dev,default

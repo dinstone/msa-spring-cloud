@@ -13,3 +13,7 @@ management:
 feign:
   hystrix: 
     enabled: true
+    
+measure:
+  aspect:
+    expression: "execution(public * com.dinstone.msa.consumer.api..*.*(..))"
