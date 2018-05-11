@@ -4,13 +4,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.endpoint.AbstractEndpoint;
-import org.springframework.stereotype.Component;
 
 import com.codahale.metrics.Metric;
 import com.codahale.metrics.SharedMetricRegistries;
 import com.dinstone.measure.config.MetricConfig;
 
-@Component
 public class MeasureEndpoint extends AbstractEndpoint<Map<String, Metric>> {
 
 	@Autowired
