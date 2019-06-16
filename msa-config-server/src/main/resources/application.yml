@@ -1,7 +1,6 @@
 spring:
-  application: 
+  application:
     name: config-server
-
 info:
   service:
     name: ${spring.application.name}
@@ -9,26 +8,16 @@ info:
       name: SaaS/dinstone
       email: dinstone@163.com
   build:
-    group: "@project.groupId@"
-    artifact: "@project.artifactId@"
-    version: "@project.version@"
-    description: "@project.description@"
-
+    group: '@project.groupId@'
+    artifact: '@project.artifactId@'
+    version: '@project.version@'
+    description: '@project.description@'
 server:
   port: 8888
-
-management: 
+management:
   port: 8887
-  security: 
+  security:
     enabled: false
-
 eureka:
   client:
-    registry-fetch-interval-seconds: 5
-    service-url:
-      defaultZone: http://eureka:123456@localhost:8761/eureka
-  instance:
-    lease-renewal-interval-in-seconds: 5
-    lease-expiration-duration-in-seconds: 15
-    preferIpAddress: true
-    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    enabled: false

@@ -15,7 +15,14 @@ info:
     description: "@project.description@"
 
 #spring.cloud.netflix.metrics.enabled: false
-
+hystrix:
+  threadpool:
+    default:
+      coreSize: 10
+      maximumSize: 200
+      maxQueueSize: 200
+      queueSizeRejectionThreshold: 180
+      
 ---
 spring:
   profiles: dev,default

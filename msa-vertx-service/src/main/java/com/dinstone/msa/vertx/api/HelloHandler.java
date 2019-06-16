@@ -47,8 +47,8 @@ public class HelloHandler {
 	@Autowired
 	private DiscoveryClient discoveryClient;
 
-	@Value("${spring.application.name}")
-	private String applicationName;
+//	@Value("${spring.application.name}")
+	private String applicationName = "config-server";
 
 	@Get
 	public void hi(RoutingContext ctx) {

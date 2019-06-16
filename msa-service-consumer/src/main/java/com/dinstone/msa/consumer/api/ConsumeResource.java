@@ -27,7 +27,7 @@ public class ConsumeResource {
 	private UserClientService userClientService;
 
 	@Autowired
-	ConsumerService consumerService;
+	HystrixProtectedService hystrixProtectedService;
 
 	@GetMapping("/get/{uid}")
 	public User get(@PathVariable("uid") long uid) {
@@ -44,14 +44,34 @@ public class ConsumeResource {
 	@GetMapping("/dc")
 	public String dc() {
 		log.info("dc access");
-		return consumerService.consumer();
+		return hystrixProtectedService.consumer();
+	}
+
+	@GetMapping("/breaker")
+	public String breaker() {
+		log.info("breaker access");
+		return hystrixProtectedService.breaker();
 	}
 
 	@Component
-	class ConsumerService {
+	class HystrixProtectedService {
 
 		@Autowired
 		RestTemplate restTemplate;
+
+		// @HystrixCommand(commandProperties = @HystrixProperty(name =
+		// "execution.isolation.thread.timeoutInMilliseconds", value = "1000"))
+		@HystrixCommand(threadPoolProperties = { @HystrixProperty(name = "coreSize", value = "20"),
+				@HystrixProperty(name = "maximumSize", value = "200"),
+				@HystrixProperty(name = "maxQueueSize", value = "200"),
+				@HystrixProperty(name = "queueSizeRejectionThreshold", value = "190") }, commandProperties = {
+						@HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "20"),
+						@HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "50"),
+						@HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "5000"),
+						@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000") })
+		public String breaker() {
+			return restTemplate.getForObject("http://user-provider/user/slow", String.class);
+		}
 
 		@HystrixCommand(fallbackMethod = "fallback", commandProperties = @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000"))
 		public String consumer() {

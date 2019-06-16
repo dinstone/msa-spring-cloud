@@ -15,10 +15,5 @@
 			<artifactId>vertx-spring-boot-starter</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.dinstone.measure</groupId>
-			<artifactId>measure-spring-boot-starter</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 	</dependencies>
 </project>

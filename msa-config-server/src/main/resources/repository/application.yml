@@ -21,10 +21,10 @@ spring:
 
 server:
   tomcat:
-    accept-count: 20
-    max-connections: 80
-    min-spare-threads: 1
-    max-threads: 4
+    accept-count: 100
+    max-connections: 1000
+    min-spare-threads: 50
+    max-threads: 200
     
     basedir: .
     accesslog:

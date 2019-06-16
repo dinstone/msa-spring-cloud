@@ -1,6 +1,7 @@
 package com.dinstone.msa.provider.api;
 
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,6 @@ public class UserResource {
 	@Autowired
 	private UserService userService;
 
-
 	@GetMapping("/get/{uid}")
 	public User get(@PathVariable("uid") int uid) {
 		LOG.info("get user with {}", uid);
@@ -33,5 +33,20 @@ public class UserResource {
 	public List<User> list() {
 		LOG.info("list users");
 		return userService.findAll();
+	}
+
+	@GetMapping("/slow")
+	public String slow() {
+		LOG.info("slow service");
+		int r = new Random().nextInt((3 - 1) + 1) + 1;
+		if (r == 3) {
+			// try {
+			// Thread.sleep(1100);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
+		}
+
+		return "" + r;
 	}
 }
