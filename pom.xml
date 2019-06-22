@@ -99,5 +99,6 @@
 		<module>msa-hystrix-turbine</module>
 		<module>msa-zipkin-server</module>
 		<module>msa-vertx-service</module>
+		<module>msa-apm-actuator</module>
 	</modules>
 </project>

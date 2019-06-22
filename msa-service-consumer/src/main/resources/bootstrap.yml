@@ -13,7 +13,10 @@ info:
     artifact: "@project.artifactId@"
     version: "@project.version@"
     description: "@project.description@"
-
+    
+eureka:
+  instance:
+    initial-status: unknown
 #spring.cloud.netflix.metrics.enabled: false
 hystrix:
   threadpool:
