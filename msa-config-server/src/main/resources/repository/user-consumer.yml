@@ -1,19 +1,23 @@
 spring:
-  application:
-    name: user-consumer
-
+   application:
+      name: user-consumer
 server:
-  port: 8080
-
-management: 
-  port: 8081
-  security: 
-    enabled: false
-
+   port: 8080
+management:
+   server:
+      port: 8081
+      security:
+         enabled: false
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+         cors:
+            allowed-origins: http://example.com
+            allowed-methods: GET,POST
 feign:
-  hystrix: 
-    enabled: true
-    
+   hystrix:
+      enabled: true
 measure:
-  aspect:
-    expression: "execution(public * com.dinstone.msa.consumer.api..*.*(..))"
+   aspect:
+      expression: execution(public * com.dinstone.msa.consumer.api..*.*(..))

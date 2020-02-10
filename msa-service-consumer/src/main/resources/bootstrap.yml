@@ -14,9 +14,9 @@ info:
     version: "@project.version@"
     description: "@project.description@"
     
-eureka:
-  instance:
-    initial-status: unknown
+#eureka:
+#  instance:
+#    initial-status: unknown
 #spring.cloud.netflix.metrics.enabled: false
 hystrix:
   threadpool:

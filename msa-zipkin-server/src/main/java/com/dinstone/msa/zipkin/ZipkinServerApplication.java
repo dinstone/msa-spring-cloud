@@ -1,17 +1,25 @@
+
 package com.dinstone.msa.zipkin;
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import zipkin.server.EnableZipkinServer;
+import zipkin.server.ZipkinServer;
+import zipkin2.server.internal.ZipkinActuatorImporter;
+import zipkin2.server.internal.ZipkinModuleImporter;
+import zipkin2.server.internal.banner.ZipkinBanner;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableZipkinServer
 public class ZipkinServerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ZipkinServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(ZipkinServer.class).banner(new ZipkinBanner())
+            .initializers(new ZipkinModuleImporter(), new ZipkinActuatorImporter())
+            .properties(EnableAutoConfiguration.ENABLED_OVERRIDE_PROPERTY + "=false",
+                "spring.config.name=zipkin-server")
+            .run(args);
+    }
 }

@@ -27,9 +27,9 @@ spring:
 #  sleuth:
 #    sampler:
 #      percentage: 1.0
-eureka:
-  instance:
-    initial-status: starting
+#eureka:
+#  instance:
+#    initial-status: starting
 ---
 spring:
   profiles: online

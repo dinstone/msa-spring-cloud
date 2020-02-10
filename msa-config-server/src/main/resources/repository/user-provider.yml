@@ -1,11 +1,18 @@
 spring:
-  application:
-    name: user-provider
-
+   application:
+      name: user-provider
 server:
-  port: 7000
- 
-management: 
-  port: 7001
-  security: 
-    enabled: false
+   port: 7000
+
+management:
+   server:
+      port: 7001
+      security:
+         enabled: false
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+         cors:
+            allowed-origins: http://example.com
+            allowed-methods: GET,POST

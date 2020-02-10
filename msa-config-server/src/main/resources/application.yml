@@ -5,7 +5,7 @@ info:
   service:
     name: ${spring.application.name}
     owner:
-      name: SaaS/dinstone
+      name: dinstone
       email: dinstone@163.com
   build:
     group: '@project.groupId@'
