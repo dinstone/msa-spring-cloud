@@ -1,10 +1,24 @@
 spring:
    application:
-      name: zuul-gatway
+      name: cloud-gatway
    security:
       user:
          name: apm
          password: 123456
+   cloud:
+      gateway:
+         discovery:
+            locator:
+               enabled: true
+               lower-case-service-id: true
+         routes:
+         - id: service_consumer
+           uri: lb://user-provider
+           predicates:
+           - Path=/up/**
+           filters:
+           - StripPrefix=1
+           
 info:
    service:
       name: ${spring.application.name}
@@ -15,13 +29,10 @@ info:
       version: '@project.version@'
       description: '@project.description@'
 server:
-   port: 9000
-   security:
-      basic:
-         enabled: false
+   port: 4444
 management:
    server:
-      port: 9001
+      port: 4445
    endpoints:
       web:
          exposure:
@@ -36,11 +47,6 @@ eureka:
    instance:
       prefer-ip-address: true
       instance-id: ${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
-zuul:
-   ignored-services: '*'
-   routes:
-      user-provider: /up/**
-      user-consumer: /uc/**
 ---
 spring:
    profiles: dev,default

@@ -106,5 +106,6 @@
         <module>msa-hystrix-dashboard</module>
         <module>msa-hystrix-turbine</module>
         <module>msa-apm-actuator</module>
+        <module>msa-gateway-cloud</module>
     </modules>
 </project>
