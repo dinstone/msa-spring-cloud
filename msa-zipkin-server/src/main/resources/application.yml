@@ -23,11 +23,3 @@ management:
   port: 9410
   security: 
     enabled: false
-  
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka:123456@localhost:8761/eureka
-  instance:
-    prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}

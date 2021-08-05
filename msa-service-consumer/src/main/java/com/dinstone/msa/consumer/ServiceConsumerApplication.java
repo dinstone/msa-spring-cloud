@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableFeignClients
-@ComponentScan("com.dinstone.msa.apm.endpoint")
+@ComponentScan("com.dinstone.msa.apm.endpoint, com.dinstone.msa.consumer")
 public class ServiceConsumerApplication {
 
     public static void main(String[] args) {
@@ -28,27 +28,27 @@ public class ServiceConsumerApplication {
         return new RestTemplate();
     }
 
-//    @Bean
-//    @ConditionalOnMissingBean
-//    OnlineEndpoint onlineEndpoint() {
-//        return new OnlineEndpoint(true, true);
-//    }
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    OfflineEndpoint offlineEndpoint() {
-//        return new OfflineEndpoint(true, true);
-//    }
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    StartEndpoint startEndpoint() {
-//        return new StartEndpoint(true, true);
-//    }
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    StopEndpoint stopEndpoint() {
-//        return new StopEndpoint(true, true);
-//    }
+    // @Bean
+    // @ConditionalOnMissingBean
+    // OnlineEndpoint onlineEndpoint() {
+    // return new OnlineEndpoint(true, true);
+    // }
+    //
+    // @Bean
+    // @ConditionalOnMissingBean
+    // OfflineEndpoint offlineEndpoint() {
+    // return new OfflineEndpoint(true, true);
+    // }
+    //
+    // @Bean
+    // @ConditionalOnMissingBean
+    // StartEndpoint startEndpoint() {
+    // return new StartEndpoint(true, true);
+    // }
+    //
+    // @Bean
+    // @ConditionalOnMissingBean
+    // StopEndpoint stopEndpoint() {
+    // return new StopEndpoint(true, true);
+    // }
 }
