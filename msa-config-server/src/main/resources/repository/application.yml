@@ -17,7 +17,7 @@ spring:
     locator:
       discovery:
         enabled: true
-    base-url: http://zipkin-server
+    base-url: http://127.0.0.1:9411
 
 server:
   tomcat:

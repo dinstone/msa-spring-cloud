@@ -13,9 +13,9 @@ spring:
                lower-case-service-id: true
          routes:
          - id: service_consumer
-           uri: lb://user-provider
+           uri: lb://user-consumer
            predicates:
-           - Path=/up/**
+           - Path=/uc/**
            filters:
            - StripPrefix=1
            
@@ -57,4 +57,4 @@ spring:
       locator:
          discovery:
             enabled: true
-      base-url: http://zipkin-server
+      base-url: http://127.0.0.1:9411
