@@ -9,13 +9,19 @@ spring:
       gateway:
          discovery:
             locator:
-               enabled: true
+               enabled: false
                lower-case-service-id: true
          routes:
          - id: service_consumer
            uri: lb://user-consumer
            predicates:
            - Path=/uc/**
+           filters:
+           - StripPrefix=1
+         - id: service_provider
+           uri: lb://user-provider
+           predicates:
+           - Path=/up/**
            filters:
            - StripPrefix=1
            

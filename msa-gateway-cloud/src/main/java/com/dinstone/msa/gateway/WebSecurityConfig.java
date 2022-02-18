@@ -13,9 +13,9 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) throws Exception {
-        // only actuator nedd authorized, other permit
-        http.csrf().disable().authorizeExchange().pathMatchers("/actuator/*").authenticated().anyExchange().permitAll()
-            .and().formLogin().and().httpBasic();
+        // only actuator need authorized, other permit
+        http.csrf().disable().authorizeExchange().pathMatchers("/actuator/health").permitAll()
+            .pathMatchers("/actuator/*").authenticated().anyExchange().permitAll().and().formLogin().and().httpBasic();
         return http.build();
     }
 

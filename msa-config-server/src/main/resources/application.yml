@@ -15,9 +15,10 @@ info:
 server:
   port: 8888
 management:
-  port: 8887
-  security:
-    enabled: false
+   server:
+      port: 8889
+      security:
+         enabled: false
 eureka:
   client:
     enabled: false

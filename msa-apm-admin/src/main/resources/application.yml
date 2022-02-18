@@ -7,6 +7,10 @@ spring:
       user:
          name: apm
          password: 123456
+   cloud:
+     consul:
+       discovery:
+         register: false
 info:
    service:
       name: ${spring.application.name}
@@ -21,9 +25,10 @@ info:
 server:
    port: 9999
 management:
-   port: 9998
-   security:
-      enabled: false
+   server:
+      port: 9998
+      security:
+         enabled: false
 eureka:
    client:
       register-with-eureka: false
