@@ -1,6 +1,9 @@
 spring:
   application:
     name: config-server
+  cloud:
+    consul:
+      enabled: false
 info:
   service:
     name: ${spring.application.name}
@@ -12,6 +15,7 @@ info:
     artifact: '@project.artifactId@'
     version: '@project.version@'
     description: '@project.description@'
+
 server:
   port: 8888
 management:
