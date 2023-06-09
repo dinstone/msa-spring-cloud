@@ -6,12 +6,10 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.a
 
 import java.net.URI;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.reactive.DefaultRequest;
-import org.springframework.cloud.client.loadbalancer.reactive.Response;
-import org.springframework.cloud.gateway.config.LoadBalancerProperties;
+import org.springframework.cloud.client.loadbalancer.DefaultRequest;
+import org.springframework.cloud.client.loadbalancer.Response;
+import org.springframework.cloud.gateway.config.GatewayLoadBalancerProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.ReactiveLoadBalancerClientFilter;
 import org.springframework.cloud.gateway.support.DelegatingServiceInstance;
@@ -20,19 +18,19 @@ import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.server.ServerWebExchange;
 
 import reactor.core.publisher.Mono;
 
 public class GrayLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilter {
 
-	private static final Log log = LogFactory.getLog(GrayLoadBalancerClientFilter.class);
-
 	private LoadBalancerClientFactory clientFactory;
 
-	private LoadBalancerProperties properties;
+	private GatewayLoadBalancerProperties properties;
 
-	public GrayLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory, LoadBalancerProperties properties) {
+	public GrayLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
+			GatewayLoadBalancerProperties properties) {
 		super(clientFactory, properties);
 
 		this.clientFactory = clientFactory;
@@ -76,7 +74,10 @@ public class GrayLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilt
 		if (loadBalancer == null) {
 			throw new NotFoundException("No loadbalancer available for " + uri.getHost());
 		}
-		return loadBalancer.choose(new DefaultRequest<ServerWebExchange>(exchange));
+
+		HttpHeaders headers = exchange.getRequest().getHeaders();
+		String grayValue = headers.getFirst(GrayConstant.GRAY_LABEL);
+		return loadBalancer.choose(new DefaultRequest<String>(grayValue));
 	}
 
 }

@@ -29,7 +29,7 @@ public class ConsumeResource {
 	private UserClientService userClientService;
 
 	@Autowired
-	HystrixProtectedService hystrixProtectedService;
+	RestTemplateService hystrixProtectedService;
 
 	@GetMapping("/get/{uid}")
 	public User get(@PathVariable("uid") long uid) {
@@ -60,7 +60,7 @@ public class ConsumeResource {
 	}
 
 	@Component
-	class HystrixProtectedService {
+	static class RestTemplateService {
 
 		@Autowired
 		RestTemplate restTemplate;

@@ -9,9 +9,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.reactive.DefaultResponse;
-import org.springframework.cloud.client.loadbalancer.reactive.Request;
-import org.springframework.cloud.client.loadbalancer.reactive.Response;
+import org.springframework.cloud.client.loadbalancer.DefaultResponse;
+import org.springframework.cloud.client.loadbalancer.Request;
+import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
@@ -41,24 +41,17 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
 		log.info("GrayRoundRobinLoadBalancer created for service: " + serviceId);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Mono<Response<ServiceInstance>> choose() {
+		return choose(null);
+	}
+
+	@SuppressWarnings({ "rawtypes" })
+	@Override
+	public Mono<Response<ServiceInstance>> choose(Request request) {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		String grayValue = (String) attributes.getRequest().getHeader(GrayConstant.GRAY_LABEL);
 
-		return choose(grayValue);
-	}
-
-	@SuppressWarnings({ "deprecation", "rawtypes" })
-	@Override
-	public Mono<Response<ServiceInstance>> choose(Request request) {
-		String grayValue = (String) request.getContext();
-
-		return choose(grayValue);
-	}
-
-	private Mono<Response<ServiceInstance>> choose(String grayValue) {
 		ServiceInstanceListSupplier supplier = serviceInstanceListSupplierProvider
 				.getIfAvailable(NoopServiceInstanceListSupplier::new);
 		return supplier.get().next().map(instances -> {
