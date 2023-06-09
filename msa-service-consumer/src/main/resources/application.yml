@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: user-consumer
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    locator:
+      discovery:
+        enabled: true
+    base-url: http://127.0.0.1:9411
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    consul:
+      discovery:
+        # 启用服务发现
+        enabled: true
+        # 启用服务注册
+        register: true
+        # 服务停止时取消注册
+        deregister: true
+        # 表示注册时使用IP而不是hostname
+        prefer-ip-address: true
+        # 执行监控检查的频率
+        health-check-interval: 10s
+        # 设置健康检查失败多长时间后，取消注册
+        health-check-critical-timeout: 30s
+        # 服务注册标识，格式为：应用名称+服务器IP+端口
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+
+hystrix:
+  threadpool:
+    default:
+      coreSize: 10
+      maximumSize: 200
+      maxQueueSize: 200
+      queueSizeRejectionThreshold: 180
+
+server:
+  port: 8080
+management:
+  server:
+    port: 8081
+    security:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: http://example.com
+        allowed-methods: GET,POST
+feign:
+  hystrix:
+    enabled: true
+measure:
+  aspect:
+    expression: execution(public * com.dinstone.msa.consumer.api..*.*(..))
+
+---
+spring:
+  profiles: default
+  cloud:
+    consul:
+      host: 192.168.1.120
+      port: 8500
+
+---
+spring:
+  profiles: online
+  cloud:
+    consul:
+      host: consul-service
+      port: 8500
+    config:
+      fail-fast: true
+      uri: http://config-service:8888/
+      profile: default
+      label: online

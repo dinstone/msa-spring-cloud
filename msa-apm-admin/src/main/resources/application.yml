@@ -11,29 +11,31 @@ spring:
      consul:
        discovery:
          register: false
-info:
-   service:
-      name: ${spring.application.name}
-   owner:
-      name: PaaS/dinstone
-      email: dinstone@163.com
-   build:
-      group: '@project.groupId@'
-      artifact: '@project.artifactId@'
-      version: '@project.version@'
-      description: '@project.description@'
+
 server:
    port: 9999
+
 management:
-   server:
-      port: 9998
-      security:
-         enabled: false
-eureka:
-   client:
-      register-with-eureka: false
-      service-url:
-         defaultZone: http://eureka:123456@localhost:8761/eureka
-   instance:
-      prefer-ip-address: true
-      instance-id: ${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+---
+spring:
+  profiles: default
+  cloud:
+    consul:
+      host: 192.168.1.120
+      port: 8500
+
+---
+spring:
+  profiles: online
+  cloud:
+    consul:
+      host: consul-service
+      port: 8500

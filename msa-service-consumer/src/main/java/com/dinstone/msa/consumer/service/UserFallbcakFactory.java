@@ -4,11 +4,11 @@ package com.dinstone.msa.consumer.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 import com.dinstone.msa.model.User;
 
-import feign.hystrix.FallbackFactory;
 
 @Component
 public class UserFallbcakFactory implements FallbackFactory<UserClientService> {

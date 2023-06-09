@@ -1,54 +1,72 @@
 
 package com.dinstone.msa.consumer;
 
+import java.util.Collections;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 
+import com.dinstone.msa.gray.GrayFeignRequestInterceptor;
+import com.dinstone.msa.gray.GrayLoadBalancerClientConfig;
+import com.dinstone.msa.gray.GrayRestRequestInterceptor;
+
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableCircuitBreaker
 @EnableFeignClients
 @ComponentScan("com.dinstone.msa.apm.endpoint, com.dinstone.msa.consumer")
+@LoadBalancerClients(defaultConfiguration = GrayLoadBalancerClientConfig.class)
 public class ServiceConsumerApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ServiceConsumerApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(ServiceConsumerApplication.class, args);
+	}
 
-    @Bean
-    @LoadBalanced
-    RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+	@Bean
+	@LoadBalanced
+	RestTemplate restTemplate(GrayRestRequestInterceptor balancerInterceptor) {
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setInterceptors(Collections.singletonList(balancerInterceptor));
+		return restTemplate;
+	}
 
-    // @Bean
-    // @ConditionalOnMissingBean
-    // OnlineEndpoint onlineEndpoint() {
-    // return new OnlineEndpoint(true, true);
-    // }
-    //
-    // @Bean
-    // @ConditionalOnMissingBean
-    // OfflineEndpoint offlineEndpoint() {
-    // return new OfflineEndpoint(true, true);
-    // }
-    //
-    // @Bean
-    // @ConditionalOnMissingBean
-    // StartEndpoint startEndpoint() {
-    // return new StartEndpoint(true, true);
-    // }
-    //
-    // @Bean
-    // @ConditionalOnMissingBean
-    // StopEndpoint stopEndpoint() {
-    // return new StopEndpoint(true, true);
-    // }
+	@Bean
+	GrayRestRequestInterceptor grayRestRequestInterceptor() {
+		return new GrayRestRequestInterceptor();
+	}
+
+	@Bean
+	GrayFeignRequestInterceptor grayRequestInterceptor() {
+		return new GrayFeignRequestInterceptor();
+	}
+
+	// @Bean
+	// @ConditionalOnMissingBean
+	// OnlineEndpoint onlineEndpoint() {
+	// return new OnlineEndpoint(true, true);
+	// }
+	//
+	// @Bean
+	// @ConditionalOnMissingBean
+	// OfflineEndpoint offlineEndpoint() {
+	// return new OfflineEndpoint(true, true);
+	// }
+	//
+	// @Bean
+	// @ConditionalOnMissingBean
+	// StartEndpoint startEndpoint() {
+	// return new StartEndpoint(true, true);
+	// }
+	//
+	// @Bean
+	// @ConditionalOnMissingBean
+	// StopEndpoint stopEndpoint() {
+	// return new StopEndpoint(true, true);
+	// }
 }

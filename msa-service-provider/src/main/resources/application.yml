@@ -1,48 +1,19 @@
 spring:
   application:
-    name: user-consumer
-
-info:
-  service:
-    name: ${spring.application.name}
-  owner:
-    name: SaaS/dinstone
-    email: dinstone@163.com
-  build:
-    group: "@project.groupId@"
-    artifact: "@project.artifactId@"
-    version: "@project.version@"
-    description: "@project.description@"
-    
-#eureka:
-#  instance:
-#    initial-status: unknown
-#spring.cloud.netflix.metrics.enabled: false
-hystrix:
-  threadpool:
-    default:
-      coreSize: 10
-      maximumSize: 200
-      maxQueueSize: 200
-      queueSizeRejectionThreshold: 180
-      
----
-spring:
-  profiles: dev,default
+    name: user-provider
+  sleuth:
+    sampler:
+      percentage: 0.1
+  zipkin:
+    locator:
+      discovery:
+        enabled: true
+    base-url: http://127.0.0.1:9411
   cloud:
-    config:
-      fail-fast: true
-      uri: http://localhost:8888/
-      profile: default
-      label: dev
-      
----
-spring:
-  profiles: online
-  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
     consul:
-      host: consul-service
-      port: 8500
       discovery:
         # 启用服务发现
         enabled: true
@@ -58,9 +29,44 @@ spring:
         health-check-critical-timeout: 30s
         # 服务注册标识，格式为：应用名称+服务器IP+端口
         instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+
+server:
+  port: 7000
+
+management:
+  server:
+    port: 7001
+    security:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      cors:
+        allowed-origins: http://example.com
+        allowed-methods: GET,POST
+
+---
+spring:
+  profiles: default
+  cloud:
+    consul:
+      host: 192.168.1.120
+      port: 8500
+    config:
+      fail-fast: true
+      uri: http://localhost:8888/
+      profile: default
+      label: offline
+---
+spring:
+  profiles: online
+  cloud:
+    consul:
+      host: consul-service
+      port: 8500
     config:
       fail-fast: true
       uri: http://config-service:8888/
       profile: default
       label: online
- 
