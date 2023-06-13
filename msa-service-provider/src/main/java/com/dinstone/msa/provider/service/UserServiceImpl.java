@@ -12,6 +12,8 @@ import com.dinstone.msa.model.User;
 @Service
 public class UserServiceImpl implements UserService {
 
+	private String version = "2.0.0";
+
 	private Map<Integer, User> usersMap = new HashMap<>();
 
 	public UserServiceImpl() {
@@ -22,14 +24,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findById(Integer uid) {
-		return usersMap.get(uid);
+		return usersMap.get(uid).setVersion(version);
 	}
 
 	@Override
 	public List<User> findAll() {
 		ArrayList<User> list = new ArrayList<>();
 		for (User u : usersMap.values()) {
-			list.add(u);
+			list.add(u.setVersion(version));
 		}
 		return list;
 	}

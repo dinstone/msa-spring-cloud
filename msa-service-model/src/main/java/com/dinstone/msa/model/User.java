@@ -6,6 +6,8 @@ public class User {
 	private String username;
 	private String address;
 
+	private String version;
+
 	public User() {
 		super();
 	}
@@ -39,6 +41,15 @@ public class User {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public User setVersion(String version) {
+		this.version = version;
+		return this;
 	}
 
 }

@@ -25,7 +25,7 @@
 						<image>openjdk:19-jdk-alpine</image>
 					</from>
 					<to>
-						<image>192.168.1.120:30050/msa/${project.artifactId}</image>
+						<image>192.168.1.120:5000/msa/${project.artifactId}</image>
 						<tags>
 							<tag>${project.version}</tag>
 						</tags>
