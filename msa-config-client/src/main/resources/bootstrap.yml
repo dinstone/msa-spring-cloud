@@ -1,17 +1,12 @@
 spring:
-   application:
-      name: user-provider
-
-user:
-   group: mmmm
-   version: 5.5
-
+  application: 
+    name: config-client
+    
 server:
-   port: 7000
+   port: 8080
 
 management:
    server:
-      port: 7001
       security:
          enabled: false
    endpoints:
@@ -21,3 +16,9 @@ management:
          cors:
             allowed-origins: http://example.com
             allowed-methods: GET,POST
+
+book:
+   author: dinstone
+   name: springcloud
+   category: category
+

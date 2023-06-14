@@ -1,3 +1,5 @@
+version: 2.0
+
 spring:
   application:
     name: user-provider
@@ -62,6 +64,10 @@ spring:
       uri: http://localhost:8888/
       profile: default
       label: offline
+      watch:
+        enabled: true
+        initialDelay: 5000 ##default 180000 ms
+        delay: 10000 ##default 500 ms
 ---
 spring:
   config:
@@ -76,3 +82,7 @@ spring:
       uri: http://config-service:8888/
       profile: default
       label: online
+      watch:
+        enabled: true
+        initialDelay: 5000 ##default 180000 ms
+        delay: 10000 ##default 500 ms

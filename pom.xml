@@ -97,5 +97,6 @@
         <module>msa-apm-actuator</module>
         <module>msa-gateway-cloud</module>
         <module>msa-gray-route</module>
+        <module>msa-config-client</module>
     </modules>
 </project>

@@ -1,3 +1,4 @@
+
 eureka:
   client:
     registry-fetch-interval-seconds: 5

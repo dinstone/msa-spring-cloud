@@ -51,7 +51,12 @@ spring:
                  - Path=/up/**
               filters:
                  - StripPrefix=1
-
+            - id: service_config
+              uri: http://localhost:8080
+              predicates:
+                 - Path=/cc/**
+              filters:
+                 - StripPrefix=1
 server:
    port: 4444
 management:
