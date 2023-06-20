@@ -1,4 +1,4 @@
-## SpringCloud Q&A 
+## SpringCloud FQA
 
 Q: config动态配置有哪几种方式？
 A: 主要有三种方式配置可以动态刷新：（高版本的需要引入依赖：spring-cloud-starter-bootstrap）
@@ -16,3 +16,12 @@ A: 需要调用ContextRefresher.refresh()方法。
 
 Q: Gateway可以动态变更路由信息吗？
 A: 可以通过动态配置刷新路由列表，实时生效，不会对访问造成影响。
+
+Q: Spring cloud 核心组件选型？
+A: 核心组件选型
+   1. API-Gateway， Spring Cloud Gateway
+   2. 服务注册，Consul
+   3. 服务配置，Consul
+   4. 服务调用，RestTemplate、OpenFeign、Spring Cloud Loadbalancer
+   5. 流量治理，Spring Cloud Circuit Breaker
+   6. 可观测性，Spring Cloud Sleuth

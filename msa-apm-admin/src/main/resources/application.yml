@@ -7,35 +7,39 @@ spring:
       user:
          name: apm
          password: 123456
+   boot:
+      admin:
+         discovery:
+            ignored-services: consul,aliyun-*,baidu-*
    cloud:
-     consul:
-       discovery:
-         register: false
+      consul:
+         discovery:
+            register: false
 
 server:
    port: 9999
 
 management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+   endpoint:
+      health:
+         show-details: ALWAYS
 
 ---
 spring:
-  profiles: default
-  cloud:
-    consul:
-      host: 192.168.1.120
-      port: 8500
+   profiles: default
+   cloud:
+      consul:
+         host: 192.168.1.120
+         port: 8500
 
 ---
 spring:
-  profiles: online
-  cloud:
-    consul:
-      host: consul-service
-      port: 8500
+   profiles: online
+   cloud:
+      consul:
+         host: consul-service
+         port: 8500
