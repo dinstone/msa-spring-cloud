@@ -48,6 +48,16 @@ management:
          cors:
             allowed-origins: http://example.com
             allowed-methods: GET,POST
+   metrics:
+      tags:
+         application: ${spring.application.name}
+      export:
+         prometheus:
+            pushgateway:
+               enabled: true
+               baseUrl: http://192.168.1.120:9091/ #pushgateway地址
+               pushRate: 15s
+               job: ${spring.application.name}
 
 ---
 spring:

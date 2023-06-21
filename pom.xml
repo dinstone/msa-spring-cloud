@@ -88,7 +88,6 @@
     </build>
 
     <modules>
-        <module>msa-eureka-server</module>
         <module>msa-service-provider</module>
         <module>msa-service-model</module>
         <module>msa-service-consumer</module>
