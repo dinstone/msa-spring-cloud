@@ -1,0 +1,102 @@
+spring:
+   application:
+      name: cloud-gatway
+   profiles:
+      active: develop
+   cloud:
+      service-registry:
+         auto-registration:
+            registerManagement: false # 注册management，默认值 true
+      loadbalancer:
+         ribbon:
+            enabled: false
+      consul:
+         config:
+            enabled: true # 是否启用配置中心,默认值 true 开启
+            prefix: config # 设置配置的基本文件夹,默认值 config,可以理解为配置文件所在的最外层文件夹
+            profile-separator: '-' # 配置环境分隔符,默认值","和default-context配置项搭配
+            format: yaml # 指定配置格式为yamL
+            data-key: data # Consul Key/Values 中的Key, Value 对应整个配置文件
+            watch:
+               enabled: true # 是否开启自动刷新,默认值true 开启
+               delay: 3000 # 刷新频率,单位:毫秒,默认值1000
+         discovery:
+            enabled: true # 启用服务发现
+            register: true # 启用服务注册
+            deregister: true # 服务停止时取消注册
+            heartbeat:
+               enabled: true
+               ttl: 30s
+            register-health-check: true # 健康检查开关
+            health-check-interval: 10s # 执行监控检查的频率
+            health-check-critical-timeout: 30s # 设置健康检查失败多长时间后，取消注册
+            prefer-ip-address: true # 表示注册时使用IP而不是hostname
+            instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+      gateway:
+         discovery:
+            locator:
+               enabled: false
+               lower-case-service-id: true
+         routes:
+         -  id: service_consumer
+            uri: lb://user-consumer
+            predicates:
+            - Path=/uc/**
+            filters:
+            - StripPrefix=1
+         -  id: service_provider
+            uri: lb://user-provider
+            predicates:
+            - Path=/up/**
+            filters:
+            - StripPrefix=1
+         -  id: service_config
+            uri: http://localhost:8080
+            predicates:
+            - Path=/cc/**
+            filters:
+            - StripPrefix=1
+
+server:
+   port: 4444
+management:
+   server:
+      port: 4445
+      security:
+         enabled: false
+   endpoints:
+      web:
+         exposure:
+            include: '*'
+         cors:
+            allowed-origins: http://example.com
+            allowed-methods: GET,POST
+   metrics:
+      tags:
+         application: ${spring.application.name}
+      export:
+         prometheus:
+            pushgateway:
+               enabled: true
+               baseUrl: http://192.168.1.120:9091/ #pushgateway地址
+               pushRate: 15s
+               job: ${spring.application.name}
+
+---
+spring:
+   config:
+      activate:
+         on-profile: develop
+   cloud:
+      consul:
+         host: 192.168.1.120
+         port: 8500
+---
+spring:
+   config:
+      activate:
+         on-profile: online
+   cloud:
+      consul:
+         host: consul-service
+         port: 8500

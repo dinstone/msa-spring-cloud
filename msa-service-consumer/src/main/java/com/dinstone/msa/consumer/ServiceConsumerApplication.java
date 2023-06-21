@@ -46,27 +46,4 @@ public class ServiceConsumerApplication {
 		return new GrayFeignRequestInterceptor();
 	}
 
-	// @Bean
-	// @ConditionalOnMissingBean
-	// OnlineEndpoint onlineEndpoint() {
-	// return new OnlineEndpoint(true, true);
-	// }
-	//
-	// @Bean
-	// @ConditionalOnMissingBean
-	// OfflineEndpoint offlineEndpoint() {
-	// return new OfflineEndpoint(true, true);
-	// }
-	//
-	// @Bean
-	// @ConditionalOnMissingBean
-	// StartEndpoint startEndpoint() {
-	// return new StartEndpoint(true, true);
-	// }
-	//
-	// @Bean
-	// @ConditionalOnMissingBean
-	// StopEndpoint stopEndpoint() {
-	// return new StopEndpoint(true, true);
-	// }
 }
