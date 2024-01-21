@@ -27,12 +27,12 @@ Q: Spring cloud 核心组件选型？
 
 A: 核心组件选型
 
-   1. API-Gateway， Spring Cloud Gateway
-   2. 服务注册，Consul
-   3. 服务配置，Consul
-   4. 服务调用，RestTemplate、OpenFeign、Spring Cloud Loadbalancer
-   5. 流量治理，Spring Cloud Circuit Breaker
-   6. 可观测性，Spring Cloud Sleuth、Spring Actuator + Prometheus
+   1. 服务网关: Spring Cloud Gateway
+   2. 服务注册: Consul
+   3. 服务配置: Consul
+   4. 服务调用: RestTemplate、OpenFeign、Spring Cloud Loadbalancer
+   5. 流量治理: Spring Cloud Circuit Breaker
+   6. 可观测性: Spring Cloud Sleuth、Spring Actuator、Prometheus
 
 ## 快速开始 FQA
 
