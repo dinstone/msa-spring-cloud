@@ -88,14 +88,13 @@
     </build>
 
     <modules>
-        <module>msa-service-provider</module>
         <module>msa-service-model</module>
+        <module>msa-service-provider</module>
         <module>msa-service-consumer</module>
         <module>msa-apm-admin</module>
-        <module>msa-config-server</module>
-        <module>msa-apm-actuator</module>
         <module>msa-gateway-cloud</module>
         <module>msa-gray-route</module>
         <module>msa-config-client</module>
+        <module>msa-config-server</module>
     </modules>
 </project>

@@ -13,7 +13,7 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) throws Exception {
-    	http.csrf().disable().authorizeExchange().anyExchange().permitAll();
+    	http.cors().and().csrf().disable().formLogin().disable().authorizeExchange().anyExchange().permitAll();
     	
         // only actuator need authorized, other permit
 //        http.csrf().disable().authorizeExchange().pathMatchers("/actuator/health").permitAll()
