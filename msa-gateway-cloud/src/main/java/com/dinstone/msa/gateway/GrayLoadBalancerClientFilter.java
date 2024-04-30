@@ -47,8 +47,8 @@ public class GrayLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilt
 		// preserve the original url
 		addOriginalRequestUrl(exchange, url);
 
-		return choose(exchange).doOnNext(reponse -> {
-			if (!reponse.hasServer()) {
+		return choose(exchange).doOnNext(response -> {
+			if (!response.hasServer()) {
 				throw NotFoundException.create(properties.isUse404(), "Unable to find instance for " + url.getHost());
 			}
 
@@ -58,7 +58,7 @@ public class GrayLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilt
 				overrideScheme = url.getScheme();
 			}
 
-			DelegatingServiceInstance serviceInstance = new DelegatingServiceInstance(reponse.getServer(),
+			DelegatingServiceInstance serviceInstance = new DelegatingServiceInstance(response.getServer(),
 					overrideScheme);
 			URI requestUrl = this.reconstructURI(serviceInstance, uri);
 

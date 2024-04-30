@@ -30,9 +30,9 @@ public class ServiceConsumerApplication {
 
 	@Bean
 	@LoadBalanced
-	RestTemplate restTemplate(GrayRestRequestInterceptor balancerInterceptor) {
+	RestTemplate restTemplate(GrayRestRequestInterceptor grayRestRequestInterceptor) {
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.setInterceptors(Collections.singletonList(balancerInterceptor));
+		restTemplate.setInterceptors(Collections.singletonList(grayRestRequestInterceptor));
 		return restTemplate;
 	}
 
@@ -42,7 +42,7 @@ public class ServiceConsumerApplication {
 	}
 
 	@Bean
-	GrayFeignRequestInterceptor grayRequestInterceptor() {
+	GrayFeignRequestInterceptor grayFeignRequestInterceptor() {
 		return new GrayFeignRequestInterceptor();
 	}
 
