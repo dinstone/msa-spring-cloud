@@ -10,7 +10,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
- * for to add gray header for RestTemplate's request
+ * add gray header to RestTemplate's request
  * 
  * @author dinstone
  *
@@ -21,10 +21,13 @@ public class GrayRestRequestInterceptor implements ClientHttpRequestInterceptor 
 	public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
 			throws IOException {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		String gray = attributes.getRequest().getHeader(GrayConstant.GRAY_LABEL);
-		if (GrayConstant.GRAY_VALUE.equalsIgnoreCase(gray)) {
-			request.getHeaders().set(GrayConstant.GRAY_LABEL, GrayConstant.GRAY_VALUE);
-			attributes.setAttribute(GrayConstant.GRAY_LABEL, GrayConstant.GRAY_VALUE, 0);
+        String grayValue = null;
+        if (attributes != null) {
+            grayValue = attributes.getRequest().getHeader(GrayConstant.HEADER_LABEL);
+        }
+        if (GrayConstant.HEADER_VALUE.equalsIgnoreCase(grayValue)) {
+			request.getHeaders().set(GrayConstant.HEADER_LABEL, GrayConstant.HEADER_VALUE);
+			attributes.setAttribute(GrayConstant.HEADER_LABEL, GrayConstant.HEADER_VALUE, 0);
 		}
 
 		return execution.execute(request, body);

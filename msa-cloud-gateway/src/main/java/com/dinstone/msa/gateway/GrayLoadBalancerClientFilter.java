@@ -76,7 +76,7 @@ public class GrayLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilt
 		}
 
 		HttpHeaders headers = exchange.getRequest().getHeaders();
-		String grayValue = headers.getFirst(GrayConstant.GRAY_LABEL);
+		String grayValue = headers.getFirst(GrayConstant.GRAY_HEADER_LABEL);
 		return loadBalancer.choose(new DefaultRequest<String>(grayValue));
 	}
 

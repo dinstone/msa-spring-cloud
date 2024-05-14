@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+	<Properties>
+		<Property name="LOG_DIR">logs</Property>
+		<Property name="ERROR_FILE">error.log</Property>
+		<Property name="DETAIL_FILE">detail.log</Property>
+	</Properties>
+
+	<Appenders>
+		<Console name="console-appender" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%-5p][%t] %l [%X{traceId}/%X{spanId}] - %m%n" />
+		</Console>
+
+		<RollingFile name="error-appender" fileName="${LOG_DIR}/${ERROR_FILE}" filePattern="${LOG_DIR}/$${date:yyyy-MM}/${ERROR_FILE}.%d{yyyy-MM-dd}">
+			<ThresholdFilter level="ERROR" />
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%-5p][%t] %l [%X{traceId}/%X{spanId}] - %m%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+
+		<RollingFile name="detail-appender" fileName="${LOG_DIR}/${DETAIL_FILE}" filePattern="${LOG_DIR}/$${date:yyyy-MM}/${DETAIL_FILE}.%d{yyyy-MM-dd}">
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%-5p][%t] %l [%X{traceId}/%X{spanId}] - %m%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="console-appender" />
+			<AppenderRef ref="detail-appender" />
+			<AppenderRef ref="error-appender" />
+		</Root>
+	</Loggers>
+</Configuration>  

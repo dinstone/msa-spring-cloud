@@ -24,26 +24,26 @@ import com.dinstone.msa.gray.GrayRestRequestInterceptor;
 @LoadBalancerClients(defaultConfiguration = GrayLoadBalancerClientConfig.class)
 public class ServiceConsumerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ServiceConsumerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ServiceConsumerApplication.class, args);
+    }
 
-	@Bean
-	@LoadBalanced
-	RestTemplate restTemplate(GrayRestRequestInterceptor grayRestRequestInterceptor) {
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.setInterceptors(Collections.singletonList(grayRestRequestInterceptor));
-		return restTemplate;
-	}
+    @Bean
+    @LoadBalanced
+    RestTemplate restTemplate(GrayRestRequestInterceptor grayRestRequestInterceptor) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setInterceptors(Collections.singletonList(grayRestRequestInterceptor));
+        return restTemplate;
+    }
 
-	@Bean
-	GrayRestRequestInterceptor grayRestRequestInterceptor() {
-		return new GrayRestRequestInterceptor();
-	}
+    @Bean
+    public GrayRestRequestInterceptor grayRestRequestInterceptor() {
+        return new GrayRestRequestInterceptor();
+    }
 
-	@Bean
-	GrayFeignRequestInterceptor grayFeignRequestInterceptor() {
-		return new GrayFeignRequestInterceptor();
-	}
+    @Bean
+    GrayFeignRequestInterceptor grayFeignRequestInterceptor() {
+        return new GrayFeignRequestInterceptor();
+    }
 
 }

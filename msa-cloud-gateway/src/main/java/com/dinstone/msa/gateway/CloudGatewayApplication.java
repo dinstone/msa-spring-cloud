@@ -18,9 +18,4 @@ public class CloudGatewayApplication {
 		SpringApplication.run(CloudGatewayApplication.class, args);
 	}
 
-	@Bean
-	public GrayLoadBalancerClientFilter grayLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
-			GatewayLoadBalancerProperties properties) {
-		return new GrayLoadBalancerClientFilter(clientFactory, properties);
-	}
 }

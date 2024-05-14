@@ -7,17 +7,17 @@ import org.springframework.core.env.Environment;
 
 /**
  * https://juejin.cn/post/7075699466019274783
- * 
- * @author dinstone
  *
+ * @author dinstone
  */
 public class GrayLoadBalancerClientConfig {
 
-	@Bean
-	public GrayRoundRobinLoadBalancer reactorServiceInstanceLoadBalancer(Environment environment,
-			LoadBalancerClientFactory loadBalancerClientFactory) {
-		String serviceId = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
-		return new GrayRoundRobinLoadBalancer(serviceId,
-				loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class));
-	}
+    @Bean
+    GrayRoundRobinLoadBalancer reactorServiceInstanceLoadBalancer(Environment environment,
+                                                                  LoadBalancerClientFactory loadBalancerClientFactory) {
+        String serviceId = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+        return new GrayRoundRobinLoadBalancer(serviceId,
+                loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class));
+    }
+
 }

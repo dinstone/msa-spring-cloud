@@ -1,4 +1,4 @@
-package com.dinstone.msa.gray;
+package com.dinstone.msa.gateway;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,43 +16,33 @@ import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import reactor.core.publisher.Mono;
 
-/**
- * The load balancer used by Feign Template and Rest Template.
- */
-public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBalancer {
+public class GatewayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
-    private static final Log log = LogFactory.getLog(GrayRoundRobinLoadBalancer.class);
+    private static final Log log = LogFactory.getLog(GatewayRoundRobinLoadBalancer.class);
 
     private final AtomicInteger position = new AtomicInteger(new Random().nextInt(1000));
 
-    private ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
+    private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
 
     private final String serviceId;
 
-    public GrayRoundRobinLoadBalancer(String serviceId,
-                                      ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) {
+    public GatewayRoundRobinLoadBalancer(String serviceId,
+                                         ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) {
         this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
         this.serviceId = serviceId;
 
-        log.info("GrayRoundRobinLoadBalancer created for service: " + serviceId);
+        log.info("GatewayRoundRobinLoadBalancer created for service: " + serviceId);
     }
 
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-
         ServiceInstanceListSupplier supplier = serviceInstanceListSupplierProvider
                 .getIfAvailable(NoopServiceInstanceListSupplier::new);
         return supplier.get().next().map(instances -> {
-            String grayValue = null;
-            if (attributes != null) {
-                grayValue = attributes.getRequest().getHeader(GrayConstant.HEADER_LABEL);
-            }
+            String grayValue = (String) request.getContext();
             ServiceInstance instance = getInstance(instances, grayValue);
             return new DefaultResponse(instance);
         });
@@ -68,8 +58,8 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
         List<ServiceInstance> normalServerList = new ArrayList<>();
         for (ServiceInstance server : instances) {
             Map<String, String> metadata = server.getMetadata();
-            String data = metadata.get(GrayConstant.META_LABEL);
-            if (GrayConstant.META_VALUE.equals(data)) {
+            String data = metadata.get(GrayConstant.GRAY_META_LABEL);
+            if (GrayConstant.GRAY_META_VALUE.equals(data)) {
                 grayServerList.add(server);
             } else {
                 normalServerList.add(server);
@@ -77,7 +67,7 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
         }
 
         int pos = Math.abs(this.position.incrementAndGet());
-        if (GrayConstant.HEADER_VALUE.equals(grayValue)) {
+        if (GrayConstant.GRAY_HEADER_VALUE.equals(grayValue)) {
             return originChoose(grayServerList, normalServerList, pos);
         } else {
             return originChoose(normalServerList, null, pos);

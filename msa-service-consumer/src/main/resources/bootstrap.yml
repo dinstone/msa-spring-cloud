@@ -32,7 +32,9 @@ spring:
             health-check-critical-timeout: 30s # 设置健康检查失败多长时间后，取消注册
             prefer-ip-address: true # 表示注册时使用IP而不是hostname
             instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
-
+            metadata:
+               lane: ${LANE_TAG:base}
+               version: "@project.version@"
 server:
    port: 8000
 

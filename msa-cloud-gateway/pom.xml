@@ -5,7 +5,7 @@
         <artifactId>msa-spring-cloud</artifactId>
         <version>1.0.0</version>
     </parent>
-    <artifactId>msa-gateway-cloud</artifactId>
+    <artifactId>msa-cloud-gateway</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

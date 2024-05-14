@@ -2,10 +2,10 @@ package com.dinstone.msa.gray;
 
 public interface GrayConstant {
 
-	String GRAY_LABEL = "gray";
-	String GRAY_VALUE = "true";
+	String HEADER_LABEL = "gray";
+	String HEADER_VALUE = "true";
 
-	Object GRAY_META = "version";
-	String GRAY_DATA = "gray";
+	Object META_LABEL = "lane";
+	String META_VALUE = "gray";
 
 }

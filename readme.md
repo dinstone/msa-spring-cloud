@@ -1,38 +1,47 @@
 ## 架构选型 FQA
 
-Q: config动态配置有哪几种方式？
+### 1 : config动态配置有哪几种方式？
 
-A: 主要有三种方式配置可以动态刷新：（高版本的需要引入依赖：spring-cloud-starter-bootstrap）
+主要有三种方式配置可以动态刷新：（高版本的需要引入依赖：spring-cloud-starter-bootstrap）
 
    1. Environment获取配置，可以动态更新；
    2. @Value 需要配合@RefreshScope 才能获取到动态配置；
    3. @ConfigurationProperties 可以获取到动态配置。
 
-Q: 配置项中的所以字段都会自动应用吗？
+### 2 : 配置项中的所有字段都会自动应用吗？
 
-A: 不是的。只有使用了上面的三种方式获取配置的组件才能享受配置的自动更新特性。比如server.port的变动是不会起作用的。
+不是的。只有使用了上面的三种方式获取配置的组件才能享受配置的自动更新特性。比如server.port的变动是不会起作用的。
 
-Q: 怎么实现配置刷新？
+### 3 : 怎么实现配置刷新？
 
-A: 需要调用ContextRefresher.refresh()方法。
+需要调用ContextRefresher.refresh()方法。
 
    1. 手动刷新，当配置文件变更后，手动调用配置客户端的接口，接口中发送ApplicationContext.publishEvent(RefreshEvent)事件，或者使用/actuator/refresh端点触发ContextRefresher.refresh()方法调用。
    2. 自动刷新，当发现配置文件变更后，自动发送ApplicationContext.publishEvent(RefreshEvent)事件。或者使用 spring cloud bus消费配置变更消息来触发更新。
 
-Q: Gateway可以动态变更路由信息吗？
+#### 4 : Gateway可以动态变更路由信息吗？
 
-A: 可以通过动态配置刷新路由列表，实时生效，不会对访问造成影响。
+可以通过动态配置刷新路由列表，实时生效，不会对访问造成影响。
 
-Q: Spring cloud 核心组件选型？
+### 5 : Spring cloud 核心组件选型？
 
-A: 核心组件选型
-
+核心组件选型：
    1. 服务网关: Spring Cloud Gateway
-   2. 服务注册: Consul
-   3. 服务配置: Consul
+   2. 服务管理: Consul
+   3. 配置管理: Consul
    4. 服务调用: RestTemplate、OpenFeign、Spring Cloud Loadbalancer
    5. 流量治理: Spring Cloud Circuit Breaker
    6. 可观测性: Spring Cloud Sleuth、Spring Actuator、Prometheus
+
+### 6 : 如何实现开发、测试环境的多分支协作， 以及生产环境的灰度发布？
+
+1. 每个服务定义3组元数据：环境（Environment）、泳道（Swimlane）、版本（version）
+* Environment：develop、testing、product
+* Swimlane：stable、gray; base、feature
+* Version：xx.yy.zz 由主版本号、次版本号和修订号三部分组成，例如：1.20.13
+
+2. 定义路由组件，增强服务路由能力，支持多分支协助的开发、测试和生产环境的灰度发布。
+
 
 ## 快速开始 FQA
 

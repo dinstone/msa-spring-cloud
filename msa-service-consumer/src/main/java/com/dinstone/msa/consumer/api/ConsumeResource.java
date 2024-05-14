@@ -29,7 +29,7 @@ public class ConsumeResource {
 	private UserClientService userClientService;
 
 	@Autowired
-	RestTemplateService hystrixProtectedService;
+	RestTemplateService restTemplateService;
 
 	@GetMapping("/get/{uid}")
 	public User get(@PathVariable("uid") long uid) {
@@ -50,13 +50,13 @@ public class ConsumeResource {
 	@GetMapping("/dc")
 	public String dc() {
 		log.info("dc access");
-		return hystrixProtectedService.consumer();
+		return restTemplateService.consumer();
 	}
 
 	@GetMapping("/breaker")
 	public String breaker() {
 		log.info("breaker access");
-		return hystrixProtectedService.breaker();
+		return restTemplateService.breaker();
 	}
 
 	@Component

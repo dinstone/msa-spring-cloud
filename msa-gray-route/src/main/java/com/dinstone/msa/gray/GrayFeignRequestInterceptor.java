@@ -8,21 +8,23 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 
 /**
- * for feign and header
- * 
- * @author dinstone
+ * add gray header to Feign template's request
  *
+ * @author dinstone
  */
 public class GrayFeignRequestInterceptor implements RequestInterceptor {
 
-	@Override
-	public void apply(RequestTemplate template) {
-		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		String gray = attributes.getRequest().getHeader(GrayConstant.GRAY_LABEL);
-		if (GrayConstant.GRAY_VALUE.equalsIgnoreCase(gray)) {
-			template.header(GrayConstant.GRAY_LABEL, GrayConstant.GRAY_VALUE);
-			attributes.setAttribute(GrayConstant.GRAY_LABEL, GrayConstant.GRAY_VALUE, RequestAttributes.SCOPE_REQUEST);
-		}
-	}
+    @Override
+    public void apply(RequestTemplate template) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String grayValue = null;
+        if (attributes != null) {
+            grayValue = attributes.getRequest().getHeader(GrayConstant.HEADER_LABEL);
+        }
+        if (GrayConstant.HEADER_VALUE.equalsIgnoreCase(grayValue)) {
+            template.header(GrayConstant.HEADER_LABEL, GrayConstant.HEADER_VALUE);
+            attributes.setAttribute(GrayConstant.HEADER_LABEL, GrayConstant.HEADER_VALUE, RequestAttributes.SCOPE_REQUEST);
+        }
+    }
 
 }
