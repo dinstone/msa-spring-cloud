@@ -15,7 +15,7 @@
         </dependency>
         <dependency>
             <groupId>com.dinstone.msa</groupId>
-            <artifactId>msa-gray-route</artifactId>
+            <artifactId>msa-swimlane-route</artifactId>
             <version>${project.version}</version>
         </dependency>
 

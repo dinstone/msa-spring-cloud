@@ -23,14 +23,14 @@ import org.springframework.web.server.ServerWebExchange;
 
 import reactor.core.publisher.Mono;
 
-public class GrayLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilter {
+public class GatewayLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilter {
 
 	private LoadBalancerClientFactory clientFactory;
 
 	private GatewayLoadBalancerProperties properties;
 
-	public GrayLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
-			GatewayLoadBalancerProperties properties) {
+	public GatewayLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
+										   GatewayLoadBalancerProperties properties) {
 		super(clientFactory, properties);
 
 		this.clientFactory = clientFactory;
@@ -76,8 +76,8 @@ public class GrayLoadBalancerClientFilter extends ReactiveLoadBalancerClientFilt
 		}
 
 		HttpHeaders headers = exchange.getRequest().getHeaders();
-		String grayValue = headers.getFirst(GrayConstant.GRAY_HEADER_LABEL);
-		return loadBalancer.choose(new DefaultRequest<String>(grayValue));
+		String swimlaneValue = headers.getFirst(GatewayConstant.HEADER_LABEL);
+		return loadBalancer.choose(new DefaultRequest<String>(swimlaneValue));
 	}
 
 }

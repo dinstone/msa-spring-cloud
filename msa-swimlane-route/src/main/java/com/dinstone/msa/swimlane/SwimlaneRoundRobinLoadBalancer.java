@@ -1,6 +1,6 @@
-package com.dinstone.msa.gray;
+package com.dinstone.msa.swimlane;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -24,9 +24,9 @@ import reactor.core.publisher.Mono;
 /**
  * The load balancer used by Feign Template and Rest Template.
  */
-public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBalancer {
+public class SwimlaneRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
-    private static final Log log = LogFactory.getLog(GrayRoundRobinLoadBalancer.class);
+    private static final Log log = LogFactory.getLog(SwimlaneRoundRobinLoadBalancer.class);
 
     private final AtomicInteger position = new AtomicInteger(new Random().nextInt(1000));
 
@@ -34,12 +34,12 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
 
     private final String serviceId;
 
-    public GrayRoundRobinLoadBalancer(String serviceId,
-                                      ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) {
+    public SwimlaneRoundRobinLoadBalancer(String serviceId,
+                                          ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider) {
         this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
         this.serviceId = serviceId;
 
-        log.info("GrayRoundRobinLoadBalancer created for service: " + serviceId);
+        log.info("SwimlaneRoundRobinLoadBalancer created for service: " + serviceId);
     }
 
     @Override
@@ -49,40 +49,45 @@ public class GrayRoundRobinLoadBalancer implements ReactorServiceInstanceLoadBal
         ServiceInstanceListSupplier supplier = serviceInstanceListSupplierProvider
                 .getIfAvailable(NoopServiceInstanceListSupplier::new);
         return supplier.get().next().map(instances -> {
-            String grayValue = null;
+            String swimlaneValue = null;
             if (attributes != null) {
-                grayValue = attributes.getRequest().getHeader(GrayConstant.HEADER_LABEL);
+                swimlaneValue = attributes.getRequest().getHeader(SwimlaneConstant.HEADER_LABEL);
             }
-            ServiceInstance instance = getInstance(instances, grayValue);
+            ServiceInstance instance = getInstance(instances, swimlaneValue);
             return new DefaultResponse(instance);
         });
     }
 
-    private ServiceInstance getInstance(List<ServiceInstance> instances, String grayValue) {
+    private ServiceInstance getInstance(List<ServiceInstance> instances, String swimlaneValue) {
         if (instances.isEmpty()) {
             log.warn("No servers available for service: " + this.serviceId);
             return null;
         }
 
-        List<ServiceInstance> grayServerList = new ArrayList<>();
-        List<ServiceInstance> normalServerList = new ArrayList<>();
-        for (ServiceInstance server : instances) {
-            Map<String, String> metadata = server.getMetadata();
-            String data = metadata.get(GrayConstant.META_LABEL);
-            if (GrayConstant.META_VALUE.equals(data)) {
-                grayServerList.add(server);
-            } else {
-                normalServerList.add(server);
-            }
-        }
-
         int pos = Math.abs(this.position.incrementAndGet());
-        if (GrayConstant.HEADER_VALUE.equals(grayValue)) {
-            return originChoose(grayServerList, normalServerList, pos);
+        List<ServiceInstance> stableList = new LinkedList<>();
+        if (swimlaneValue == null || swimlaneValue.isEmpty() || SwimlaneConstant.STABLE_VALUE.equalsIgnoreCase(swimlaneValue)) {
+            for (ServiceInstance server : instances) {
+                Map<String, String> metadata = server.getMetadata();
+                String data = metadata.get(SwimlaneConstant.METADATA_LABEL);
+                if (data == null || data.isEmpty() || SwimlaneConstant.STABLE_VALUE.equals(data)) {
+                    stableList.add(server);
+                }
+            }
+            return originChoose(stableList, null, pos);
         } else {
-            return originChoose(normalServerList, null, pos);
+            List<ServiceInstance> targetList = new LinkedList<>();
+            for (ServiceInstance server : instances) {
+                Map<String, String> metadata = server.getMetadata();
+                String data = metadata.get(SwimlaneConstant.METADATA_LABEL);
+                if (data == null || data.isEmpty() || SwimlaneConstant.STABLE_VALUE.equals(data)) {
+                    stableList.add(server);
+                } else if (swimlaneValue.equalsIgnoreCase(data)) {
+                    targetList.add(server);
+                }
+            }
+            return originChoose(targetList, stableList, pos);
         }
-
     }
 
     private ServiceInstance originChoose(List<ServiceInstance> firstList, List<ServiceInstance> secondList, int pos) {

@@ -32,13 +32,16 @@ spring:
             health-check-critical-timeout: 30s # 设置健康检查失败多长时间后，取消注册
             prefer-ip-address: true # 表示注册时使用IP而不是hostname
             instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
-version: 1.2.3
+            metadata:
+               swimlane: ${SWIMLANE_TAG:stable}
+               version: "@project.version@"
+version: ${SWIMLANE_TAG:stable}
 server:
-   port: 7000
+   port: ${SERVER_PORT:7000}
 
 management:
    server:
-      port: 7001
+      port: ${MANAGE_PORT:7001}
       security:
          enabled: false
    endpoints:

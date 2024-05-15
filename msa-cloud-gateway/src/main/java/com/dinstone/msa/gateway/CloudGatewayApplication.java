@@ -11,11 +11,17 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@LoadBalancerClients(defaultConfiguration = GrayLoadBalancerClientConfig.class)
+@LoadBalancerClients(defaultConfiguration = GatewayLoadBalancerClientConfig.class)
 public class CloudGatewayApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CloudGatewayApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CloudGatewayApplication.class, args);
+    }
+
+    @Bean
+    public GatewayLoadBalancerClientFilter gatewayLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
+                                                                           GatewayLoadBalancerProperties properties) {
+        return new GatewayLoadBalancerClientFilter(clientFactory, properties);
+    }
 
 }

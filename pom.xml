@@ -93,7 +93,7 @@
         <module>msa-service-consumer</module>
         <module>msa-apm-admin</module>
         <module>msa-cloud-gateway</module>
-        <module>msa-gray-route</module>
+        <module>msa-swimlane-route</module>
         <module>msa-config-client</module>
         <module>msa-config-server</module>
     </modules>

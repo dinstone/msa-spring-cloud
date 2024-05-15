@@ -31,9 +31,9 @@ public class UserResource {
 	public User get(@PathVariable("uid") int uid) {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
-		String gray = request.getHeader("gray");
+		String gray = request.getHeader("swimlane");
 
-		LOG.info("get user with {}, gray={}", uid, gray);
+		LOG.info("get user with {}, swimlane={}", uid, gray);
 		return userService.findById(uid);
 	}
 

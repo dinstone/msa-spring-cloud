@@ -13,15 +13,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 
-import com.dinstone.msa.gray.GrayFeignRequestInterceptor;
-import com.dinstone.msa.gray.GrayLoadBalancerClientConfig;
-import com.dinstone.msa.gray.GrayRestRequestInterceptor;
+import com.dinstone.msa.swimlane.SwimlaneFeignRequestInterceptor;
+import com.dinstone.msa.swimlane.SwimlaneLoadBalancerClientConfig;
+import com.dinstone.msa.swimlane.SwimlaneRestRequestInterceptor;
 
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
 @ComponentScan("com.dinstone.msa.apm.endpoint, com.dinstone.msa.consumer")
-@LoadBalancerClients(defaultConfiguration = GrayLoadBalancerClientConfig.class)
+@LoadBalancerClients(defaultConfiguration = SwimlaneLoadBalancerClientConfig.class)
 public class ServiceConsumerApplication {
 
     public static void main(String[] args) {
@@ -30,20 +30,20 @@ public class ServiceConsumerApplication {
 
     @Bean
     @LoadBalanced
-    RestTemplate restTemplate(GrayRestRequestInterceptor grayRestRequestInterceptor) {
+    RestTemplate restTemplate(SwimlaneRestRequestInterceptor swimlaneRestRequestInterceptor) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setInterceptors(Collections.singletonList(grayRestRequestInterceptor));
+        restTemplate.setInterceptors(Collections.singletonList(swimlaneRestRequestInterceptor));
         return restTemplate;
     }
 
     @Bean
-    public GrayRestRequestInterceptor grayRestRequestInterceptor() {
-        return new GrayRestRequestInterceptor();
+    public SwimlaneRestRequestInterceptor grayRestRequestInterceptor() {
+        return new SwimlaneRestRequestInterceptor();
     }
 
     @Bean
-    GrayFeignRequestInterceptor grayFeignRequestInterceptor() {
-        return new GrayFeignRequestInterceptor();
+    SwimlaneFeignRequestInterceptor grayFeignRequestInterceptor() {
+        return new SwimlaneFeignRequestInterceptor();
     }
 
 }

@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
  *
  * @author dinstone
  */
-public class GrayLoadBalancerClientConfig {
+public class GatewayLoadBalancerClientConfig {
 
     @Bean
     public GatewayRoundRobinLoadBalancer reactorServiceInstanceLoadBalancer(Environment environment,
@@ -21,9 +21,4 @@ public class GrayLoadBalancerClientConfig {
                 loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class));
     }
 
-    @Bean
-    public GrayLoadBalancerClientFilter grayLoadBalancerClientFilter(LoadBalancerClientFactory clientFactory,
-                                                                     GatewayLoadBalancerProperties properties) {
-        return new GrayLoadBalancerClientFilter(clientFactory, properties);
-    }
 }

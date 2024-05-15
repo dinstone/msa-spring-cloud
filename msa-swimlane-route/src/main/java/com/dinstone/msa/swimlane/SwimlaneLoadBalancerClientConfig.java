@@ -1,4 +1,4 @@
-package com.dinstone.msa.gray;
+package com.dinstone.msa.swimlane;
 
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
@@ -10,13 +10,13 @@ import org.springframework.core.env.Environment;
  *
  * @author dinstone
  */
-public class GrayLoadBalancerClientConfig {
+public class SwimlaneLoadBalancerClientConfig {
 
     @Bean
-    GrayRoundRobinLoadBalancer reactorServiceInstanceLoadBalancer(Environment environment,
-                                                                  LoadBalancerClientFactory loadBalancerClientFactory) {
+    SwimlaneRoundRobinLoadBalancer reactorServiceInstanceLoadBalancer(Environment environment,
+                                                                      LoadBalancerClientFactory loadBalancerClientFactory) {
         String serviceId = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
-        return new GrayRoundRobinLoadBalancer(serviceId,
+        return new SwimlaneRoundRobinLoadBalancer(serviceId,
                 loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class));
     }
 

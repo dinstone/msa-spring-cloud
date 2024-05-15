@@ -33,7 +33,7 @@ spring:
             prefer-ip-address: true # 表示注册时使用IP而不是hostname
             instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
             metadata:
-               lane: ${LANE_TAG:base}
+               swimlane: ${SWIMLANE_TAG:stable}
                version: "@project.version@"
 server:
    port: 8000

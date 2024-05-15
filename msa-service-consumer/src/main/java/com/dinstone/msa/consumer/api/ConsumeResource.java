@@ -35,7 +35,7 @@ public class ConsumeResource {
 	public User get(@PathVariable("uid") long uid) {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
-		String gray = request.getHeader("gray");
+		String gray = request.getHeader("swimlane");
 
 		log.info("get access: {}", gray);
 		return userClientService.get(uid);

@@ -1,4 +1,4 @@
-package com.dinstone.msa.gray;
+package com.dinstone.msa.swimlane;
 
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -8,22 +8,22 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 
 /**
- * add gray header to Feign template's request
+ * add swimlane header to Feign template's request
  *
  * @author dinstone
  */
-public class GrayFeignRequestInterceptor implements RequestInterceptor {
+public class SwimlaneFeignRequestInterceptor implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        String grayValue = null;
+        String swimlaneValue = null;
         if (attributes != null) {
-            grayValue = attributes.getRequest().getHeader(GrayConstant.HEADER_LABEL);
+            swimlaneValue = attributes.getRequest().getHeader(SwimlaneConstant.HEADER_LABEL);
         }
-        if (GrayConstant.HEADER_VALUE.equalsIgnoreCase(grayValue)) {
-            template.header(GrayConstant.HEADER_LABEL, GrayConstant.HEADER_VALUE);
-            attributes.setAttribute(GrayConstant.HEADER_LABEL, GrayConstant.HEADER_VALUE, RequestAttributes.SCOPE_REQUEST);
+        if (swimlaneValue != null) {
+            template.header(SwimlaneConstant.HEADER_LABEL, swimlaneValue);
+            attributes.setAttribute(SwimlaneConstant.HEADER_LABEL, swimlaneValue, RequestAttributes.SCOPE_REQUEST);
         }
     }
 

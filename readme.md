@@ -35,12 +35,12 @@
 
 ### 6 : 如何实现开发、测试环境的多分支协作， 以及生产环境的灰度发布？
 
-1. 每个服务定义3组元数据：环境（Environment）、泳道（Swimlane）、版本（version）
+1. 每个服务定义3组元数据标签：环境（Environment）、泳道（Swimlane）、版本（version）
 * Environment：develop、testing、product
-* Swimlane：stable、gray; base、feature
+* Swimlane：stable、gray; feature
 * Version：xx.yy.zz 由主版本号、次版本号和修订号三部分组成，例如：1.20.13
 
-2. 定义路由组件，增强服务路由能力，支持多分支协助的开发、测试和生产环境的灰度发布。
+2. 定义泳道路由组件，增强服务路由能力，支持多分支协助的开发、测试和生产环境的灰度发布。
 
 
 ## 快速开始 FQA
