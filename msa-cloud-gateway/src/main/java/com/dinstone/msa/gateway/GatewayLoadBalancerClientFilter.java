@@ -76,7 +76,7 @@ public class GatewayLoadBalancerClientFilter extends ReactiveLoadBalancerClientF
 		}
 
 		HttpHeaders headers = exchange.getRequest().getHeaders();
-		String swimlaneValue = headers.getFirst(GatewayConstant.HEADER_LABEL);
+		String swimlaneValue = headers.getFirst(GatewayConstant.SWIMLANE_HEADER);
 		return loadBalancer.choose(new DefaultRequest<String>(swimlaneValue));
 	}
 

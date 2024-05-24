@@ -1,6 +1,5 @@
 package com.dinstone.msa.gateway;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -57,11 +56,11 @@ public class GatewayRoundRobinLoadBalancer implements ReactorServiceInstanceLoad
 
         int pos = Math.abs(this.position.incrementAndGet());
         List<ServiceInstance> stableList = new LinkedList<>();
-        if (swimlaneValue == null || swimlaneValue.isEmpty() || GatewayConstant.STABLE_VALUE.equalsIgnoreCase(swimlaneValue)) {
+        if (swimlaneValue == null || swimlaneValue.isEmpty() || GatewayConstant.SWIMLANE_STABLE.equalsIgnoreCase(swimlaneValue)) {
             for (ServiceInstance server : instances) {
                 Map<String, String> metadata = server.getMetadata();
-                String data = metadata.get(GatewayConstant.METADATA_LABEL);
-                if (data == null || data.isEmpty() || GatewayConstant.STABLE_VALUE.equals(data)) {
+                String data = metadata.get(GatewayConstant.SWIMLANE_METADATA);
+                if (data == null || data.isEmpty() || GatewayConstant.SWIMLANE_STABLE.equals(data)) {
                     stableList.add(server);
                 }
             }
@@ -70,8 +69,8 @@ public class GatewayRoundRobinLoadBalancer implements ReactorServiceInstanceLoad
             List<ServiceInstance> targetList = new LinkedList<>();
             for (ServiceInstance server : instances) {
                 Map<String, String> metadata = server.getMetadata();
-                String data = metadata.get(GatewayConstant.METADATA_LABEL);
-                if (data == null || data.isEmpty() || GatewayConstant.STABLE_VALUE.equals(data)) {
+                String data = metadata.get(GatewayConstant.SWIMLANE_METADATA);
+                if (data == null || data.isEmpty() || GatewayConstant.SWIMLANE_STABLE.equals(data)) {
                     stableList.add(server);
                 } else if (swimlaneValue.equalsIgnoreCase(data)) {
                     targetList.add(server);

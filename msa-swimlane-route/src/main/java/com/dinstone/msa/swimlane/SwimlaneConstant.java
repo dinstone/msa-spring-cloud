@@ -2,9 +2,9 @@ package com.dinstone.msa.swimlane;
 
 public interface SwimlaneConstant {
 
-    String HEADER_LABEL = "swimlane";
-    String METADATA_LABEL = "swimlane";
+    String SWIMLANE_HEADER = "swimlane";
+    String SWIMLANE_METADATA = "swimlane";
 
-    String STABLE_VALUE = "stable";
+    String SWIMLANE_STABLE = "stable";
 
 }

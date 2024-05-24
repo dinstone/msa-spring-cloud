@@ -51,7 +51,7 @@ public class SwimlaneRoundRobinLoadBalancer implements ReactorServiceInstanceLoa
         return supplier.get().next().map(instances -> {
             String swimlaneValue = null;
             if (attributes != null) {
-                swimlaneValue = attributes.getRequest().getHeader(SwimlaneConstant.HEADER_LABEL);
+                swimlaneValue = attributes.getRequest().getHeader(SwimlaneConstant.SWIMLANE_HEADER);
             }
             ServiceInstance instance = getInstance(instances, swimlaneValue);
             return new DefaultResponse(instance);
@@ -66,11 +66,11 @@ public class SwimlaneRoundRobinLoadBalancer implements ReactorServiceInstanceLoa
 
         int pos = Math.abs(this.position.incrementAndGet());
         List<ServiceInstance> stableList = new LinkedList<>();
-        if (swimlaneValue == null || swimlaneValue.isEmpty() || SwimlaneConstant.STABLE_VALUE.equalsIgnoreCase(swimlaneValue)) {
+        if (swimlaneValue == null || swimlaneValue.isEmpty() || SwimlaneConstant.SWIMLANE_STABLE.equalsIgnoreCase(swimlaneValue)) {
             for (ServiceInstance server : instances) {
                 Map<String, String> metadata = server.getMetadata();
-                String data = metadata.get(SwimlaneConstant.METADATA_LABEL);
-                if (data == null || data.isEmpty() || SwimlaneConstant.STABLE_VALUE.equals(data)) {
+                String data = metadata.get(SwimlaneConstant.SWIMLANE_METADATA);
+                if (data == null || data.isEmpty() || SwimlaneConstant.SWIMLANE_STABLE.equals(data)) {
                     stableList.add(server);
                 }
             }
@@ -79,8 +79,8 @@ public class SwimlaneRoundRobinLoadBalancer implements ReactorServiceInstanceLoa
             List<ServiceInstance> targetList = new LinkedList<>();
             for (ServiceInstance server : instances) {
                 Map<String, String> metadata = server.getMetadata();
-                String data = metadata.get(SwimlaneConstant.METADATA_LABEL);
-                if (data == null || data.isEmpty() || SwimlaneConstant.STABLE_VALUE.equals(data)) {
+                String data = metadata.get(SwimlaneConstant.SWIMLANE_METADATA);
+                if (data == null || data.isEmpty() || SwimlaneConstant.SWIMLANE_STABLE.equals(data)) {
                     stableList.add(server);
                 } else if (swimlaneValue.equalsIgnoreCase(data)) {
                     targetList.add(server);

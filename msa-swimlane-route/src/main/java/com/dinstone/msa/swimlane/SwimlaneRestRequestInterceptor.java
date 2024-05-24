@@ -23,11 +23,11 @@ public class SwimlaneRestRequestInterceptor implements ClientHttpRequestIntercep
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String swimlaneValue = null;
         if (attributes != null) {
-            swimlaneValue = attributes.getRequest().getHeader(SwimlaneConstant.HEADER_LABEL);
+            swimlaneValue = attributes.getRequest().getHeader(SwimlaneConstant.SWIMLANE_HEADER);
         }
         if (swimlaneValue != null) {
-            request.getHeaders().set(SwimlaneConstant.HEADER_LABEL, swimlaneValue);
-            attributes.setAttribute(SwimlaneConstant.HEADER_LABEL, swimlaneValue, RequestAttributes.SCOPE_REQUEST);
+            request.getHeaders().set(SwimlaneConstant.SWIMLANE_HEADER, swimlaneValue);
+            attributes.setAttribute(SwimlaneConstant.SWIMLANE_HEADER, swimlaneValue, RequestAttributes.SCOPE_REQUEST);
         }
 
         return execution.execute(request, body);

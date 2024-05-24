@@ -19,11 +19,11 @@ public class SwimlaneFeignRequestInterceptor implements RequestInterceptor {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String swimlaneValue = null;
         if (attributes != null) {
-            swimlaneValue = attributes.getRequest().getHeader(SwimlaneConstant.HEADER_LABEL);
+            swimlaneValue = attributes.getRequest().getHeader(SwimlaneConstant.SWIMLANE_HEADER);
         }
         if (swimlaneValue != null) {
-            template.header(SwimlaneConstant.HEADER_LABEL, swimlaneValue);
-            attributes.setAttribute(SwimlaneConstant.HEADER_LABEL, swimlaneValue, RequestAttributes.SCOPE_REQUEST);
+            template.header(SwimlaneConstant.SWIMLANE_HEADER, swimlaneValue);
+            attributes.setAttribute(SwimlaneConstant.SWIMLANE_HEADER, swimlaneValue, RequestAttributes.SCOPE_REQUEST);
         }
     }
 
